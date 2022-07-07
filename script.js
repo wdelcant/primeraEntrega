@@ -11,6 +11,8 @@
 // declaramos las variables de los precios
 const priceOne = 60000;
 const priceTwo = 120000;
+let total = 0;
+let totalPersonas = 0;
 
 alert('Bienvenido/a a nuestro programa de cotización de cabañas');
 let userName = prompt('Ingrese nombre de usuario '); // El usuario ingresa su nombre
@@ -20,9 +22,8 @@ alert('A continuación elija la cantidad de personas que desean arrendar');
 let adults = parseInt(prompt('Ingrese el número de adultos'));
 let kids = parseInt(prompt('Ingrese el número de niños'));
 
-
 // Listas
-class User {
+class User {    
     constructor(name, lastName, age) {
         this.name = name.toUpperCase();
         this.lastName = lastName.toUpperCase();
@@ -30,7 +31,7 @@ class User {
     }
 }
 
-function registerUsers() {
+function registerUsers() { // registra los usuarios
     let numberUsers = adults + kids;
     let users = [];
     for (let i = 0; i < numberUsers; i++) {
@@ -43,14 +44,14 @@ function registerUsers() {
     return users;
 }
 
-function registeredUsers(users) {
+function registeredUsers(users) { // muestra los usuarios registrados
     for (const user of users) {
         console.log(user);
         alert(`Nombre: ${user.name} \n Apellido: ${user.lastName} \n Edad: ${user.age}`);
     }
 }
 
-function registration() {
+function registration() { // registra los usuarios
     let users = registerUsers();
     registeredUsers(users);
 }
@@ -77,9 +78,13 @@ function menuComida(menus) {
     const comidasEncontrado = menus.find((comida) => comida.id === nombreComidas);
     if (comidasEncontrado) {
         alert(`El ${comidasEncontrado.name}, tiene un precio de: $${comidasEncontrado.price} por persona`);
+            console.log(`El ${comidasEncontrado.name} tiene un precio de: $${comidasEncontrado.price} por persona`);
+            console.log(comidasEncontrado);
     }
-    console.log(`El ${comidasEncontrado.name} tiene un precio de: $${comidasEncontrado.price} por persona`);
-    console.log(comidasEncontrado);
+    else if (comidasEncontrado === undefined) {
+        alert('No se encontro la comida');
+    }
+    showMenu();
     
 }
 
@@ -89,45 +94,37 @@ function oneCabin(adults, kids){ // cotizamos una cabaña
     let total = adults + kids;
         if (adults <= 0 && kids !== 0){
             alert('No se puede arrendar una cabañas sin adultos');
+            showMenu();
         }
         else if (total > 6){
             /* Una alerta que se activa cuando el número de personas supera las 6. */
             alert('Sobrepasa el limite de personas por cabaña (6 personas), contrate dos si desea mas capacidad');
-        }
-        else if (total <= 6){ // si el usuario ingresa un número que está entre 1 y 6
-            alert(`El total a pagar es: $${priceOne}`);
+            showMenu();
         }
         else (total <= 6)
             {registration();} 
-        
+
     return total;
 }
 
-function twoCabin(adults, kids){ // cotizamos dos cabañas
+function twoCabin(adults, kids){ // cotizamos dos cabañas«
     let total = adults + kids;
         if (adults <= 0 && kids !== 0){
             alert('No se puede arrendar una cabañas sin adultos');
+            showMenu();
         }
         else if (total > 12){
             /* Una alerta que se activa cuando el número de personas supera las 12. */
             alert('Sobrepasa el limite de personas máximo por cabaña, si son mas personas favor contactar a nuestro personal');
-        }
-        else if (total <= 12){ // si el usuario ingresa un número que está entre 1 y 6 independientemente de la cantidad de personas que puede arrendar
-            alert(`El total a pagar es: $${priceTwo}`);
+            showMenu();
         }
         else (total <= 12)
             {registration();} 
     return total;
 }
 
-function showTotal(total){ //muestra el total de personas
-    if (total <= 7 || total <= 13){
-        alert(`El total de personas ingresadas es : ${total}`);
-    }
-}
-
 function showMenu(menu){ // muestra el menú principal del programa
-    let options = prompt(`Estimado/a ${userName.toUpperCase()}, actualmente son ${adults + kids} personas ingresadas. \n \n Elija la opción que desea: \n 1. Una cabaña (hasta 6 personas) \n 2. Dos cabañas (hasta 12 personas) \n 3. Menu comida \n \n Escriba (EXIT) para salir`);
+    let options = prompt(`Estimado/a ${userName.toUpperCase()}, actualmente son ${adults + kids} personas ingresadas. \n \n Elija la opción que desea: \n 1. Una cabaña (hasta 6 personas) \n 2. Dos cabañas (hasta 12 personas) \n \n Escriba (EXIT) para salir`);
     return options;
 }
 
@@ -141,25 +138,75 @@ function quotation(){ //cotizamos las cabañas y el menú
                 switch(selectedOption){
                     case 1: // una cabaña
                         let totalOne = oneCabin(adults, kids); // solicitamos el número de adultos y niños
-                        showTotal(totalOne); // mostramos el total de personas
+                        total = total + priceOne
+                        totalPersonas = totalPersonas + adults + kids 
+                        const footOne = prompt(`¿Desea menu diario o menu completo? \n 1. Si \n 2. No`)
+                        if(footOne === '1'){
+                            menuComida(menus);
+                        }
+                        else if(footOne === '2'){
+                            const decisionOne = prompt(`¿Desea seguir cotizando? \n 1. Si \n 2. No`)
+                            if (decisionOne === '1'){
+                                alert('A continuación elija la cantidad de personas que desean arrendar');
+                                let adults = parseInt(prompt('Ingrese el número de adultos'));
+                                let kids = parseInt(prompt('Ingrese el número de niños'));
+                                selectedOption = showMenu();
+                            }
+                            else if (decisionOne === '2'){
+                                alert(`El total a pagar es: $${total}`);
+                                alert(`El total de personas ingresadas es: ${totalPersonas}`);
+                                selectedOption = 'EXIT';
+                            }
+                            else if (decisionOne === undefined || decisionOne === ''){
+                                alert('Opción no valida');
+                            }
+                        }
+                        else if (footOne === undefined || footOne === '') {
+                                alert('Ese menu no existe');
+                        }	
                         break;
+
                     case 2: // dos cabañas
                         let totalTwo = twoCabin(adults, kids); // solicitamos el número de adultos y niños
-                        showTotal(totalTwo); // mostramos el total de personas
+                        total = total + priceTwo
+                        totalPersonas = totalPersonas + adults + kids 
+                        const footTwo = prompt(`¿Desea menu diario o menu completo? \n 1. Si \n 2. No`)
+                        if (footTwo === '1'){
+                            menuComida(menus);
+                        }
+                        else if (footTwo === '2'){
+                            const decisionTwo = prompt(`¿Desea seguir cotizando? \n 1. Si \n 2. No`)
+                            if (decisionTwo === '1'){
+                            alert('A continuación elija la cantidad de personas que desean arrendar');
+                            let adults = parseInt(prompt('Ingrese el número de adultos'));
+                            let kids = parseInt(prompt('Ingrese el número de niños'));
+                            selectedOption = showMenu()
+                            }
+                            else if (decisionTwo === '2'){
+                            alert(`El total a pagar es: $${total}`);
+                            alert(`El total de personas ingresadas es: ${totalPersonas}`);
+                            selectedOption = 'EXIT';
+                            }
+                            else{
+                                alert('Opción inválida');   
+                            }
+                        }
+                        else {
+                            alert('Opción no válida');
+                        }
                         break;
-                    case 3: // 
-                        menuComida(menus);
-                        break;
+
                     default:
-                        alert('Ingrese la opción 1, 2 o 3 para continuar');
+                        alert('Ingrese la opción 1 o 2 para continuar');
                         selectedOption = showMenu();
                         break;
                 }
         }     
         else{ // si el usuario ingresa un número que no está entre 1,2 o 3
             alert('Ingrese la opción valida');  
+            selectedOption = showMenu();
         }
-        selectedOption = showMenu();
+        
     }
 }
 /* Llamando a la función principal. */
