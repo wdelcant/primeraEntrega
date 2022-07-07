@@ -19,8 +19,8 @@ let userName = prompt('Ingrese nombre de usuario '); // El usuario ingresa su no
 alert(`Hola ${userName.toUpperCase()} bienvenido/a`); // mensaje de bienvenida
 
 alert('A continuación elija la cantidad de personas que desean arrendar');
-let adults = parseInt(prompt('Ingrese el número de adultos'));
-let kids = parseInt(prompt('Ingrese el número de niños'));
+adults = parseInt(prompt('Ingrese el número de adultos'));
+kids = parseInt(prompt('Ingrese el número de niños'));
 
 // Listas
 class User {    
@@ -82,7 +82,7 @@ function menuComida(menus) {
             console.log(comidasEncontrado);
     }
     else if (comidasEncontrado === undefined) {
-        alert('No se encontro la comida');
+        alert('No se encontró la comida');
     }
     showMenu();
     
@@ -148,8 +148,6 @@ function quotation(){ //cotizamos las cabañas y el menú
                             const decisionOne = prompt(`¿Desea seguir cotizando? \n 1. Si \n 2. No`)
                             if (decisionOne === '1'){
                                 alert('A continuación elija la cantidad de personas que desean arrendar');
-                                let adults = parseInt(prompt('Ingrese el número de adultos'));
-                                let kids = parseInt(prompt('Ingrese el número de niños'));
                                 selectedOption = showMenu();
                             }
                             else if (decisionOne === '2'){
@@ -178,8 +176,6 @@ function quotation(){ //cotizamos las cabañas y el menú
                             const decisionTwo = prompt(`¿Desea seguir cotizando? \n 1. Si \n 2. No`)
                             if (decisionTwo === '1'){
                             alert('A continuación elija la cantidad de personas que desean arrendar');
-                            let adults = parseInt(prompt('Ingrese el número de adultos'));
-                            let kids = parseInt(prompt('Ingrese el número de niños'));
                             selectedOption = showMenu()
                             }
                             else if (decisionTwo === '2'){
@@ -211,5 +207,8 @@ function quotation(){ //cotizamos las cabañas y el menú
 }
 /* Llamando a la función principal. */
 quotation();
+/* Fin de la función principal. */
+
+
 alert(`Adios ${userName.toUpperCase()}. Gracias por usar nuestro servicio de arriendo de cabañas.`);
 
