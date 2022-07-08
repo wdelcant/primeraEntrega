@@ -148,6 +148,8 @@ function quotation(){ //cotizamos las cabañas y el menú
                             const decisionOne = prompt(`¿Desea seguir cotizando? \n 1. Si \n 2. No`)
                             if (decisionOne === '1'){
                                 alert('A continuación elija la cantidad de personas que desean arrendar');
+                                adults = parseInt(prompt('Ingrese el número de adultos'));
+                                kids = parseInt(prompt('Ingrese el número de niños'));
                                 selectedOption = showMenu();
                             }
                             else if (decisionOne === '2'){
@@ -176,6 +178,8 @@ function quotation(){ //cotizamos las cabañas y el menú
                             const decisionTwo = prompt(`¿Desea seguir cotizando? \n 1. Si \n 2. No`)
                             if (decisionTwo === '1'){
                             alert('A continuación elija la cantidad de personas que desean arrendar');
+                            adults = parseInt(prompt('Ingrese el número de adultos'));
+                            kids = parseInt(prompt('Ingrese el número de niños'));
                             selectedOption = showMenu()
                             }
                             else if (decisionTwo === '2'){
